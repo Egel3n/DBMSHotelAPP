@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {%block css%}
+    {%endblock%}
+
+    <title></title>
+
+</head>
+<body>
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary p-3">
+      <a class="navbar-brand mr-3" href="{%url 'home'%}">İTİCÜ </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{%url 'home'%}">Ana Ekran</span></a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'res_hotels'%}">Restoranlarımız</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'pool_hotels'%}">Havuzlarımız</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{%url 'employees'%}">Çalışanlarımız</a>
+          </li>
+        </ul>
+
+          
+          <div class=" me-3">
+            <ul class="navbar-nav">
+          {%if user.is_authenticated%}
+
+            <li class="nav-item float-right">
+              <span class="nav-link " href="#">Hoşgeldiniz, {{user.username}}</span>
+            </li>
+            <li class="nav-item float-right">
+              <a class="nav-link " href="{%url 'myrooms'%}">Odalarım</a>
+            </li>
+
+
+            <li class="nav-item float-right">
+              <a class="nav-link " href="{%url 'logout'%}">Çıkış</a>
+            </li>
+
+                  
+          {%else%}
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'register'%}">Kayıt</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="{%url 'login'%}">Giriş</a>
+            </li>
+          {%endif%}
+        </ul>
+      </div>
+      </div>
+    </nav>
+  
+
+
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+      {{message}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+      
+      </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {%block title%}
+    {%endblock%}
+
+    <div class="container">
+  <div class="row">   
+        {%block body%}
+        {%endblock%}    
+  </div>   
+</div>
+
+   
+    
+    
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+</html>

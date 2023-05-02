@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+
+{%block title%}
+<h1>Rooms</h1>
+
+<h3>Bakiyeniz: {{budget}}TL</h3>
+{%endblock%}
+
+
+
+{%block body%}
+
+{%for room in rooms%}
+
+<div class="col-3 ">
+
+{%include 'partials/_room.html'%}
+
+</div>
+
+{% endfor %}
+
+{%endblock%}
+

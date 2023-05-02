@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{%block title%}
+<h1>Pools in {{hotel.name}}</h1>
+{%endblock%}
+
+{%block category%}
+
+
+{%endblock%}
+
+{%block body%}
+
+{%for pool in pools%}
+
+<div class="col-3 ">
+
+{%include 'partials/_pools.html'%}
+
+</div>
+
+{% endfor %}
+
+{%endblock%}
+

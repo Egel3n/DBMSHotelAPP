@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{%block body%}
+
+<div class="fluid-container">
+<div class="container">
+  {%if bookings|length > 0 %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Room</th>
+      <th scope="col">Check-in Date</th>
+      <th scope="col">Check-out Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in bookings %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{book.room}}</td>
+      <td>{{book.checkinDate}}</td>
+      <td>{{book.checkOutDate}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{%else%}
+<div class="alert alert-warning">Bir Odanız Bulunmuyor.</div>
+
+{%endif%}
+
+
+
+</div>
+
+</div>
+
+
+
+{%endblock%}

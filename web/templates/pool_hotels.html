@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+
+{%block title%}
+<h1>Select a Hotel For Pools</h1>
+{%endblock%}
+
+{%block category%}
+
+{%include 'partials/categories.html'%}
+
+{%endblock%}
+
+{%block body%}
+
+{%for hotel in hotels%}
+
+<div class="col-3 ">
+
+{%include 'partials/_hotel.html'%}
+
+</div>
+
+{% endfor %}
+
+{%endblock%}
+

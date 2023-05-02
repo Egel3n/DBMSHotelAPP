@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+
+{%block title%}
+<h1>All Employees </h1>
+{%endblock%}
+
+{%block category%}
+
+{%include 'partials/categories.html'%}
+
+{%endblock%}
+
+{%block body%}
+
+<h3>Pool Employees</h3>
+
+{%for pool in pools%}
+
+<div class="col-3 ">
+
+{%include 'partials/_employee.html'%}
+
+</div>
+{% endfor %}
+
+ <h3>Restaurant Employees</h3>
+{%for rest in restaurants%}
+
+<div class="col-3 ">
+
+{%include 'partials/_employee2.html'%}
+
+</div> 
+{% endfor %}
+
+{%endblock%}
+

@@ -1,0 +1,73 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block css%}
+<link rel="stylesheet" href="{%static 'css/room_details.css'%}">
+{%endblock%}
+
+{%block title%}
+  {%if error%}
+    <div class="alert alert-danger"> {{error}} </div>
+    {%endif%}
+
+{%endblock%}
+
+{%block body%}
+<h3>Bakiyeniz: {{budget}}TL</h3>
+
+<div class="container-fluid">
+  <div class="container">
+
+    <div class="card" style="width: 18rem;">
+      <img src="{{room.img.url}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{room.type}}</h5>
+        <p class="card-text">Very Good Room</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Number Of Beds: {{room.number_of_beds}}</li>
+        <li class="list-group-item">Daily Price: {{room.daily_price}} $</li>
+        <li class="list-group-item">  
+          {%if room.is_taken%}
+          Booked
+          {%endif%}
+          {%if room.is_taken == False%}
+          Available
+          {% endif %}
+        </li>
+      </ul>
+           
+      <div class="container-fluid">
+        <div class="container">
+          <div class="card-body">
+            <form action="{% url 'booking' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" value="{{room.price}}" name="price">
+              <input type="hidden" value="{{room.id}}" name="roomId">
+              <h6>Check-In Date</h6>
+              <input type="date" name="checkin"> 
+              <h6>Check-Out Date</h6>
+              <input type="date" name="checkout">
+              <input type="submit" value="Book The Room" > 
+            </form>
+          
+          </div>
+        </div>  
+  
+
+        </div>
+      </div>
+  </div>
+</div>
+
+
+   
+       
+     
+
+  {%endblock%}
+
+ 
+
+
+
