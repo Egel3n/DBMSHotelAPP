@@ -8,10 +8,9 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
-
 def index(request,id):
-      rooms = Room.objects.filter(hotel = Hotel.objects.get(id=id)).filter(is_taken=False)
+      #rooms = Room.objects.filter(hotel = Hotel.objects.get(id=id)).filter(is_taken=False)
+      rooms = Room.objects.raw(f"select * from web_room where hotel_id = {id} and is_taken = 0")
       if request.user.is_authenticated:
             guest = Guest.objects.get(user=request.user)
             return render(request,"index.html",{"rooms":rooms,"budget":guest.budget})
@@ -22,8 +21,10 @@ def index(request,id):
 
 def room_details(request,id):
       room = Room.objects.get(id = id)
+      room = Room.objects.raw(f"select * from web_room where id={id}")[0]
       if request.user.is_authenticated:
             guest = Guest.objects.get(user=request.user)
+            guest = Guest.objects.raw(f"select * from web_guest where user_id = {request.user.id}")[0]
             return render(request,"room_details.html",{"room":room,"budget":guest.budget})   
       
       else:
@@ -44,6 +45,7 @@ def booking(request):
             if dayss < 0:
                   return render(request,"room_details.html",{"room":room,"error":"Tersten mi gidiyosun?"})
             if int(guest.budget) >= room.daily_price*dayss:
+                  newBooking = BookingRelation.objects.raw(f"insert into web_bookingrelation (checkinDate,checkOutDate,guest_id,room_id) Values ({checkin},{checkout},{guest.id},{room.id})")
                   newBooking = BookingRelation.objects.create(guest=guest,room=room,checkinDate=checkin,checkOutDate=checkout)
                   newBooking.save()
                   room.is_taken = True
@@ -59,7 +61,9 @@ def booking(request):
 
 
 def hotels(request):
-      content = {"hotels":Hotel.objects.all(),"btn_message":"Odaları Gör","goto":"rooms"}
+      #hotels = Hotel.objects.all()
+      hotels = Hotel.objects.raw("select * from web_hotel")
+      content = {"hotels":hotels,"btn_message":"Odaları Gör","goto":"rooms"}
       return render(request,"hotels.html",content)
 
 def res_hotels(request):
@@ -90,5 +94,6 @@ def myrooms(request):
       if not request.user.is_authenticated:
             return redirect("login")
       else:
-            bookings = BookingRelation.objects.filter(guest__user = request.user)
+            #bookings = BookingRelation.objects.filter(guest__user = request.user)
+            bookings = BookingRelation.objects.raw(f"select * from web_bookingrelation where guest_id = (select id from auth_user where id = {request.user.id})")
             return render(request,"myrooms.html",{"bookings":bookings})

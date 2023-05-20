@@ -46,7 +46,8 @@ def register_request(request):
                     user.save()
                     guest = Guest.objects.create(user=user,budget=budget)
                     guest.save()
-                    redirect("home")
+                    messages.add_message(request,messages.SUCCESS,"Hesap Başarı İle Oluşturuldu")
+                    return redirect("login")
         else:
             return render(request,"account/register.html",{'error':"Passwords Not Matched"})
 
